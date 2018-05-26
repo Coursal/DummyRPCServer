@@ -61,9 +61,7 @@ void dum_prog_1(char *host)
 		printf("Choice: ");
 		scanf("%d", &choice);
 		printf("==========================\n");
-		
-		
-	
+
 	
 		if(choice==1)
 		{
@@ -75,15 +73,18 @@ void dum_prog_1(char *host)
 			
 			average_1_arg.X.X_len=n;
 			average_1_arg.X_size=n;
-			average_1_arg.X.X_val=(int *)malloc(n*sizeof(int));
+			average_1_arg.X.X_val=(int *) malloc(n*sizeof(int));
 			
 			for(i=0;i<n;i++)
 			{
 				printf("X[%d] = ", i);
 				scanf("%d", &average_1_arg.X.X_val[i]);
 			}
+			
+			for(i=0;i<n;i++)
+				printf("X[%d]=%d \n", i, average_1_arg.X.X_val[i]);
 				
-			result_1=average_1(&average_1_arg, clnt);
+			result_1 = average_1(&average_1_arg, clnt);
 			
 			printf("Average of X[]: %.2f\n", *result_1);
 			///////////////////////////////////////

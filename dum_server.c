@@ -6,22 +6,28 @@
 
 #include "dum.h"
 
+
 float *average_1_svc(X_arr *argp, struct svc_req *rqstp)
 {
-	static float  result;
+	static float result;
 
 	printf("Average function called\n");
 	
 	int sum=0;
 	int i;
 	
-	for(i=0;i<argp->X_size;i++)
-		sum+=argp->X.X_val[i];
-		
-	result=(float)sum/argp->X_size;
+	printf("X_size = %d \n", argp->X_size);
 
+	for(i=0;i<argp->X_size;i++)
+		sum = sum + argp->X.X_val[i];
+	
+	result=(float) sum/argp->X_size;
+	
+	result=104.3;
+	
 	return &result;
 }
+
 
 max_min *max_and_min_1_svc(X_arr *argp, struct svc_req *rqstp)
 {
@@ -51,13 +57,20 @@ prod *product_1_svc(X_times_r *argp, struct svc_req *rqstp)
 
 	printf("X[]*r function called\n");
 	
+	printf("r : %.2f \n", argp->r);
+	printf("X_size : %d \n", argp->X_size);
+
 	int i;
 	
+	for(i=0;i<argp->X_size;i++)
+		printf("X[%d] = %d \n", i, argp->X.X_val[i]);
+
 	result.prod.prod_len=argp->X_size;
 	result.prod.prod_val=(float *)malloc(argp->X_size*sizeof(float));
-	
+
 	for(i=0;i<argp->X_size;i++)
 		result.prod.prod_val[i]=(float)argp->r*argp->X.X_val[i];
+	
 
 	return &result;
 }
