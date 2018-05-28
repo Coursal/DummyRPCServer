@@ -6,7 +6,7 @@
 #include "dum.h"
 
 bool_t
-xdr_X_arr (XDR *xdrs, X_arr *objp)
+xdr_X_array (XDR *xdrs, X_array *objp)
 {
 	register int32_t *buf;
 
@@ -31,7 +31,7 @@ xdr_max_min (XDR *xdrs, max_min *objp)
 }
 
 bool_t
-xdr_X_times_r (XDR *xdrs, X_times_r *objp)
+xdr_r_times_X (XDR *xdrs, r_times_X *objp)
 {
 	register int32_t *buf;
 
@@ -46,7 +46,7 @@ xdr_X_times_r (XDR *xdrs, X_times_r *objp)
 }
 
 bool_t
-xdr_prod (XDR *xdrs, prod *objp)
+xdr_rX (XDR *xdrs, rX *objp)
 {
 	register int32_t *buf;
 

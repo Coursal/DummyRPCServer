@@ -1,4 +1,4 @@
-struct X_arr
+struct X_array
 {
 	int X <100>;
 	int X_size;
@@ -10,14 +10,14 @@ struct max_min
 	int min;
 };
 
-struct X_times_r
+struct r_times_X
 {
 	int X <100>;
 	int X_size;
 	float r;
 };
 
-struct prod
+struct rX
 {
 	float prod <100>;
 };
@@ -26,8 +26,8 @@ program DUM_PROG
 {
 	version DUM_VERS
 	{
-		float average(X_arr)=1;
-		max_min max_and_min(X_arr)=2;
-		prod product(X_times_r)=3;
-	}=1;
-}=0x23451111;
+		float average (X_array) = 1;
+		max_min maxmin(X_array) = 2;
+		rX product(r_times_X) = 3;
+	} = 1;
+} = 0x23450001;

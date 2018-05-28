@@ -20,9 +20,9 @@ static void
 dum_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		X_arr average_1_arg;
-		X_arr max_and_min_1_arg;
-		X_times_r product_1_arg;
+		X_array average_1_arg;
+		X_array maxmin_1_arg;
+		r_times_X product_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -34,20 +34,20 @@ dum_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		return;
 
 	case average:
-		_xdr_argument = (xdrproc_t) xdr_X_arr;
+		_xdr_argument = (xdrproc_t) xdr_X_array;
 		_xdr_result = (xdrproc_t) xdr_float;
 		local = (char *(*)(char *, struct svc_req *)) average_1_svc;
 		break;
 
-	case max_and_min:
-		_xdr_argument = (xdrproc_t) xdr_X_arr;
+	case maxmin:
+		_xdr_argument = (xdrproc_t) xdr_X_array;
 		_xdr_result = (xdrproc_t) xdr_max_min;
-		local = (char *(*)(char *, struct svc_req *)) max_and_min_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) maxmin_1_svc;
 		break;
 
 	case product:
-		_xdr_argument = (xdrproc_t) xdr_X_times_r;
-		_xdr_result = (xdrproc_t) xdr_prod;
+		_xdr_argument = (xdrproc_t) xdr_r_times_X;
+		_xdr_result = (xdrproc_t) xdr_rX;
 		local = (char *(*)(char *, struct svc_req *)) product_1_svc;
 		break;
 

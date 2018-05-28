@@ -14,14 +14,14 @@ extern "C" {
 #endif
 
 
-struct X_arr {
+struct X_array {
 	struct {
 		u_int X_len;
 		int *X_val;
 	} X;
 	int X_size;
 };
-typedef struct X_arr X_arr;
+typedef struct X_array X_array;
 
 struct max_min {
 	int max;
@@ -29,7 +29,7 @@ struct max_min {
 };
 typedef struct max_min max_min;
 
-struct X_times_r {
+struct r_times_X {
 	struct {
 		u_int X_len;
 		int *X_val;
@@ -37,57 +37,57 @@ struct X_times_r {
 	int X_size;
 	float r;
 };
-typedef struct X_times_r X_times_r;
+typedef struct r_times_X r_times_X;
 
-struct prod {
+struct rX {
 	struct {
 		u_int prod_len;
 		float *prod_val;
 	} prod;
 };
-typedef struct prod prod;
+typedef struct rX rX;
 
-#define DUM_PROG 0x23451111
+#define DUM_PROG 0x23450001
 #define DUM_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define average 1
-extern  float * average_1(X_arr *, CLIENT *);
-extern  float * average_1_svc(X_arr *, struct svc_req *);
-#define max_and_min 2
-extern  max_min * max_and_min_1(X_arr *, CLIENT *);
-extern  max_min * max_and_min_1_svc(X_arr *, struct svc_req *);
+extern  float * average_1(X_array *, CLIENT *);
+extern  float * average_1_svc(X_array *, struct svc_req *);
+#define maxmin 2
+extern  max_min * maxmin_1(X_array *, CLIENT *);
+extern  max_min * maxmin_1_svc(X_array *, struct svc_req *);
 #define product 3
-extern  prod * product_1(X_times_r *, CLIENT *);
-extern  prod * product_1_svc(X_times_r *, struct svc_req *);
+extern  rX * product_1(r_times_X *, CLIENT *);
+extern  rX * product_1_svc(r_times_X *, struct svc_req *);
 extern int dum_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define average 1
 extern  float * average_1();
 extern  float * average_1_svc();
-#define max_and_min 2
-extern  max_min * max_and_min_1();
-extern  max_min * max_and_min_1_svc();
+#define maxmin 2
+extern  max_min * maxmin_1();
+extern  max_min * maxmin_1_svc();
 #define product 3
-extern  prod * product_1();
-extern  prod * product_1_svc();
+extern  rX * product_1();
+extern  rX * product_1_svc();
 extern int dum_prog_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_X_arr (XDR *, X_arr*);
+extern  bool_t xdr_X_array (XDR *, X_array*);
 extern  bool_t xdr_max_min (XDR *, max_min*);
-extern  bool_t xdr_X_times_r (XDR *, X_times_r*);
-extern  bool_t xdr_prod (XDR *, prod*);
+extern  bool_t xdr_r_times_X (XDR *, r_times_X*);
+extern  bool_t xdr_rX (XDR *, rX*);
 
 #else /* K&R C */
-extern bool_t xdr_X_arr ();
+extern bool_t xdr_X_array ();
 extern bool_t xdr_max_min ();
-extern bool_t xdr_X_times_r ();
-extern bool_t xdr_prod ();
+extern bool_t xdr_r_times_X ();
+extern bool_t xdr_rX ();
 
 #endif /* K&R C */
 

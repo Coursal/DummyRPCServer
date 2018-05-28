@@ -7,15 +7,16 @@
 #include "dum.h"
 
 
-void dum_prog_1(char *host)
+void
+dum_prog_1(char *host)
 {
 	CLIENT *clnt;
 	float  *result_1;
-	X_arr  average_1_arg;
+	X_array  average_1_arg;
 	max_min  *result_2;
-	X_arr  max_and_min_1_arg;
-	prod  *result_3;
-	X_times_r  product_1_arg;
+	X_array  maxmin_1_arg;
+	rX  *result_3;
+	r_times_X  product_1_arg;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, DUM_PROG, DUM_VERS, "udp");
@@ -25,124 +26,139 @@ void dum_prog_1(char *host)
 	}
 #endif	/* DEBUG */
 
-	result_1 = average_1(&average_1_arg, clnt);
-	if (result_1 == (float *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_2 = max_and_min_1(&max_and_min_1_arg, clnt);
-	if (result_2 == (max_min *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	result_3 = product_1(&product_1_arg, clnt);
-	if (result_3 == (prod *) NULL) {
-		clnt_perror (clnt, "call failed");
-	}
-	
-	int i;
 	int flag=1;
-	int n;
-	int r;
-	
 	int choice;
-
-	printf("--------------------------------------------------------------------------\n");
+	int i;
+	int n;
+	float r;
 
 	do
 	{
-		
 		printf("==========================\n");
 		printf("=====Dummy Operations=====\n");
 		printf("==========================\n");
-		printf("1. average of X[] \n");
-		printf("2. max & min of X[] \n");
-		printf("3. r*X[] \n");
-		printf("4. Exit \n");
+		printf("1. average of X[]\n");
+		printf("2. max and min of X[]\n");
+		printf("3. r*X[]\n");
+		printf("4. Quit\n");
 		printf("==========================\n");
 		printf("Choice: ");
 		scanf("%d", &choice);
 		printf("==========================\n");
-
-	
+		
 		if(choice==1)
 		{
-			///////////////////////////////////////
+			///////////////////////////////////////////////////////
 			//average of X[]
-			///////////////////////////////////////
-			printf("Number of elements: ");
+			///////////////////////////////////////////////////////
+			printf("Give size of X[]: ");
 			scanf("%d", &n);
-			
+		
 			average_1_arg.X.X_len=n;
 			average_1_arg.X_size=n;
 			average_1_arg.X.X_val=(int *) malloc(n*sizeof(int));
-			
+		
+			printf("\n");
+		
 			for(i=0;i<n;i++)
 			{
 				printf("X[%d] = ", i);
-				scanf("%d", &average_1_arg.X.X_val[i]);
+				scanf("%d", &average_1_arg.X.X_val[i]);	
 			}
-			
-			for(i=0;i<n;i++)
-				printf("X[%d]=%d \n", i, average_1_arg.X.X_val[i]);
-				
+	
 			result_1 = average_1(&average_1_arg, clnt);
 			
-			printf("Average of X[]: %.2f\n", *result_1);
-			///////////////////////////////////////
-			///////////////////////////////////////
+			if (result_1 == (float *) NULL) 
+			{
+				clnt_perror (clnt, "call failed");
+			}
+			else
+			{
+				printf("\n");
+				printf("Average of X[] == %.2f\n", *result_1);
+				printf("\n");
+			}
+			///////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////
 		}
 		else if(choice==2)
 		{
-			///////////////////////////////////////
+			///////////////////////////////////////////////////////
 			//max and min of X[]
-			///////////////////////////////////////
-			printf("Number of elements: ");
+			///////////////////////////////////////////////////////
+			printf("Give size of X[]: ");
 			scanf("%d", &n);
-
-			max_and_min_1_arg.X.X_len=n;
-			max_and_min_1_arg.X_size=n;
-			max_and_min_1_arg.X.X_val=(int *)malloc(n*sizeof(int));
+		
+			maxmin_1_arg.X.X_len=n;
+			maxmin_1_arg.X_size=n;
+			maxmin_1_arg.X.X_val=(int *) malloc(n*sizeof(int));
+			
+			printf("\n");
 			
 			for(i=0;i<n;i++)
 			{
 				printf("X[%d] = ", i);
-				scanf("%d", &max_and_min_1_arg.X.X_val[i]);
+				scanf("%d", &maxmin_1_arg.X.X_val[i]);	
 			}
-				
-			result_2=max_and_min_1(&max_and_min_1_arg, clnt);
+	
+			result_2 = maxmin_1(&maxmin_1_arg, clnt);
 			
-			printf("Max of X[]: %d\n", result_2->max);
-			printf("Min of X[]: %d\n", result_2->min);
-			///////////////////////////////////////
-			///////////////////////////////////////
-		}
+			if (result_2 == (max_min *) NULL) 
+			{
+				clnt_perror (clnt, "call failed");
+			}
+			else
+			{
+				printf("\n");
+				printf("Max of X[] == %d\n", result_2->max);
+				printf("Min of X[] == %d\n", result_2->min);
+				printf("\n");
+			}	
+			///////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////
+		}		
 		else if(choice==3)
 		{
-			///////////////////////////////////////
+			///////////////////////////////////////////////////////
 			//r*X[]
-			///////////////////////////////////////
-			printf("Number of elements: ");
+			///////////////////////////////////////////////////////
+			printf("Give size of X[]: ");
 			scanf("%d", &n);
-			
-			printf("r: ");
-			scanf("%d", &r);
+		
+			printf("\n");
 			
 			product_1_arg.X.X_len=n;
 			product_1_arg.X_size=n;
-			product_1_arg.r=r;
-			product_1_arg.X.X_val=(int *)malloc(n*sizeof(int));
+			product_1_arg.X.X_val=(int *) malloc(n*sizeof(int));
 			
 			for(i=0;i<n;i++)
 			{
 				printf("X[%d] = ", i);
-				scanf("%d", &product_1_arg.X.X_val[i]);
+				scanf("%d", &product_1_arg.X.X_val[i]);	
 			}
-				
-			result_3=product_1(&product_1_arg, clnt);
 			
-			for(i=0;i<n;i++)
-				printf("%.2f*X[%d]=%.2f\n", product_1_arg.r, i, result_3->prod.prod_val[i]);
-			///////////////////////////////////////
-			///////////////////////////////////////
+			printf("Give floating number r: ");
+			scanf("%f", &r);
+			
+			product_1_arg.r=r;
+			
+			printf("\n");
+			
+			result_3 = product_1(&product_1_arg, clnt);
+			
+			if (result_3 == (rX *) NULL) 
+			{
+				clnt_perror (clnt, "call failed");
+			}
+			else
+			{
+				printf("\n");
+				for(i=0;i<n;i++)
+					printf("r*X[%d] == %.2f\n", i, result_3->prod.prod_val[i]);
+				printf("\n");
+			}
+			///////////////////////////////////////////////////////
+			///////////////////////////////////////////////////////
 		}
 		else if(choice==4)
 		{
@@ -150,13 +166,10 @@ void dum_prog_1(char *host)
 		}
 		else
 		{
-			printf("Invalid Choice. Terminating in 3...2...1...\n");
-			exit(1);
+			printf("Invalid Choice. Try Again.\n\n");
 		}
-	}while(flag);
-	
-	printf("--------------------------------------------------------------------------\n");
-	
+	}while(flag);	
+
 	
 #ifndef	DEBUG
 	clnt_destroy (clnt);
@@ -164,16 +177,15 @@ void dum_prog_1(char *host)
 }
 
 
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
 	char *host;
 
-	if (argc < 2)
-	{
+	if (argc < 2) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
 	}
-	
 	host = argv[1];
 	dum_prog_1 (host);
 exit (0);
